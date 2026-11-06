@@ -1,16 +1,36 @@
-# WhatsApp × Flicks POC
+# Flam × Meta POCs
 
-**Every brand surface should be interactive.** An interactive proof of concept by Flam, showing Flicks (swappable, interactive videos) inside WhatsApp Business: chat messages, the business profile, the catalog, Status, and the Business app's catalog manager.
+**Every brand surface should be interactive.** Interactive proofs of concept by Flam, showing Flicks (swappable, interactive videos) across Meta's apps. Each POC is a self-contained static page in its own folder, so each one can be hosted on its own.
 
-- **User journey:** a shopper discovers, swaps and buys from a Flick without leaving the chat.
-- **Business journey:** a business adds a Flick to its catalog, sets a price for each variant and publishes it.
+| Folder | POC |
+|---|---|
+| `/` (root `index.html`) | **WhatsApp × Flicks**: chat messages, business profile, catalog, Status and the Business app's catalog manager |
+| `facebook/` | **Flicks on Facebook**: Feed playable ad (Gap), Audience Network rewarded, Messenger reply-with-pick |
+| `instagram/` | **Flicks on Instagram**: Stories playable, creator reel link in bio, story link sticker, partnership ad, Content Flicks in Reels (GRWM, MicroDrama) |
+| `whatsapp-deck/` | **Flam × WhatsApp pitch deck** |
 
-## Live site
+## Live site (GitHub Pages)
 
-Served by GitHub Pages from `index.html` on the `main` branch. Every push to `main` updates the same address.
+Served from the `main` branch. Every push to `main` updates the same address:
+
+- WhatsApp POC: the site root, unchanged
+- Facebook: `/facebook/`
+- Instagram: `/instagram/`
+- WhatsApp deck: `/whatsapp-deck/`
+
+## Host each POC separately on Vercel
+
+Create one Vercel project per POC, all from this repository:
+
+1. Vercel → Add New → Project → import this repository.
+2. Framework preset: **Other**. Leave the build command empty.
+3. **Root Directory**: choose the folder: `facebook`, `instagram` or `whatsapp-deck`. Leave it at the root for the WhatsApp POC.
+4. Deploy, then repeat for the next folder. Each project gets its own URL.
+
+Every folder has its own `vercel.json`, so each project behaves the same on its own.
 
 ## Updating
 
-Edit or replace `index.html`, then commit and push to `main`. The site refreshes within a minute or two.
+Replace the `index.html` in the folder you are changing, then commit and push to `main`. The sites refresh within a minute or two.
 
-`index.html` is fully self-contained (scripts and fonts are inlined). Flick videos stream from `flicks.flamapp.live`.
+Every page is self-contained (scripts, fonts and photos inlined). The Flicks, the Gap ad tag and the reel pages load live from their own sites, so present online.
