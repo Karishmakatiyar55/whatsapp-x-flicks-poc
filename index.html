@@ -3782,6 +3782,15 @@ class Component extends DCLogic {
         el.setAttribute('data-k', kind);
         es.left = (cl - pad) + 'px'; es.top = (ct - pad) + 'px'; es.width = (cr - cl + pad * 2) + 'px'; es.height = (cb - ct + pad * 2) + 'px';
         es.borderRadius = (Math.max(rad, 10) + pad) + 'px';
+        const tp = el.querySelector('.wcTap');
+        if (kind === 'tap' && tp) {
+          const pl = this._pool && this._pool[t.getAttribute('data-flick')];
+          const fr = pl ? pl.f.getBoundingClientRect() : r;
+          const fx = (fr.left - hr.left) / k, fy = (fr.top - hr.top) / k, fw = fr.width / k, fh = fr.height / k;
+          let tx = fx + fw * 0.265 - (cl - pad), ty = fy + fh - fw * 0.09 - (ct - pad);
+          tx = Math.max(14, Math.min(cr - cl - 14, tx)); ty = Math.max(14, Math.min(cb - ct - 14, ty));
+          tp.style.left = tx + 'px'; tp.style.top = ty + 'px';
+        }
       }
     }
     el.style.opacity = ok ? '1' : '0';
