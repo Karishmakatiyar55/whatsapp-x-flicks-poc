@@ -2887,9 +2887,6 @@ a:hover{color:#F8DDD0;}
                       <div style="position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:6px;background:#1b1b1b;">
                         <sc-if value="{{ m.sq }}"><div data-badge="pill" data-flick="{{ m.code }}" data-fit="cover" data-live="1" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"><div style="width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,0.15);border-top-color:rgba(255,255,255,0.7);animation:lcSpin .8s linear infinite;"></div></div></sc-if>
                         <sc-if value="{{ m.tall }}"><div data-badge="pill" data-flick="{{ m.code }}" data-fit="cover" data-live="1" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"><div style="width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,0.15);border-top-color:rgba(255,255,255,0.7);animation:lcSpin .8s linear infinite;"></div></div></sc-if>
-                        <div style="position:absolute;left:8px;top:8px;display:flex;align-items:center;gap:5px;padding:4px 9px 4px 7px;border-radius:12px;background:rgba(0,0,0,.62);color:#fff;font-size:11.5px;font-weight:500;pointer-events:none;">
-                          <svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="#fff"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"></path></svg>{{ badgeLabel }}
-                        </div>
                       </div>
                       <div sc-camel-on-click="{{ m.onOpen }}" style="padding:8px 7px 4px;display:flex;flex-direction:column;gap:2px;cursor:pointer;">
                         <div style="font-size:14.5px;font-weight:500;">{{ m.title }}</div>
@@ -2917,7 +2914,7 @@ a:hover{color:#F8DDD0;}
                         <div style="width:52px;height:52px;border-radius:5px;background:{{ m.tint }};display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="22" height="22" sc-camel-view-box="0 0 24 24" fill="#fff"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"></path></svg></div>
                         <div style="min-width:0;display:flex;flex-direction:column;gap:2px;">
                           <div style="font-size:13.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ m.title }}</div>
-                          <div style="font-size:12.5px;color:#3b4a54;">{{ m.price }} · Flicks</div>
+                          <div style="font-size:12.5px;color:#3b4a54;">{{ m.price }}</div>
                         </div>
                       </div>
                       <div style="padding:2px 6px 4px;display:flex;flex-direction:column;gap:2px;">
@@ -2930,7 +2927,7 @@ a:hover{color:#F8DDD0;}
                     <div style="align-self:flex-end;width:236px;background:#D9FDD3;border-radius:8px;padding:3px;box-shadow:0 1px 0.5px rgba(11,20,26,.13);display:flex;flex-direction:column;gap:4px;animation:lcPop .25s ease;">
                       <div sc-camel-on-click="{{ m.onOpen }}" style="position:relative;width:100%;aspect-ratio:1/1;border-radius:6px;overflow:hidden;cursor:pointer;background:{{ m.pickSw }};">
                         <sc-if value="{{ m.pickHasImg }}"><img src="{{ m.pickImg }}" alt="{{ m.pickVariant }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;"></sc-if>
-                        <div style="position:absolute;left:8px;top:8px;padding:3px 8px;border-radius:999px;background:rgba(17,27,33,.72);color:#fff;font-size:11px;font-weight:600;letter-spacing:.02em;">Picked in Flicks</div>
+                        <div style="position:absolute;left:8px;top:8px;padding:3px 8px;border-radius:999px;background:rgba(17,27,33,.72);color:#fff;font-size:11px;font-weight:600;letter-spacing:.02em;">Your pick</div>
                       </div>
                       <div style="padding:2px 6px 4px;display:flex;flex-direction:column;gap:2px;">
                         <div style="font-size:13.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ m.title }}</div>
@@ -2978,7 +2975,7 @@ a:hover{color:#F8DDD0;}
                         <div style="width:52px;height:52px;border-radius:5px;background:{{ m.tint }};display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="22" height="22" sc-camel-view-box="0 0 24 24" fill="#fff"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"></path></svg></div>
                         <div style="min-width:0;display:flex;flex-direction:column;gap:2px;">
                           <div style="font-size:13.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ m.title }}</div>
-                          <div style="font-size:12.5px;color:#3b4a54;">{{ m.price }} · {{ badgeLabel }}</div>
+                          <div style="font-size:12.5px;color:#3b4a54;">{{ m.price }}</div>
                         </div>
                       </div>
                       <div style="padding:2px 6px 0;font-size:14.5px;line-height:1.4;">{{ m.text }}</div>
@@ -3112,10 +3109,6 @@ a:hover{color:#F8DDD0;}
               </div>
             </div>
             <div style="flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:12px;">
-              <div style="display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:10px;background:#f0f7f3;color:#0b5b42;font-size:13px;line-height:1.4;">
-                <div style="width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="#fff"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"></path></svg></div>
-                <div>Items marked <b>{{ badgeLabel }}</b> are Flicks. Tap one to swap the product on a real video.</div>
-              </div>
               <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 10px;">
                 <sc-for list="{{ catalogTiles }}" as="t" hint-placeholder-count="4">
                   <div style="display:flex;flex-direction:column;gap:6px;">
@@ -3123,7 +3116,6 @@ a:hover{color:#F8DDD0;}
                       <sc-if value="{{ t.sq }}"><div data-badge="pill" data-tag="{{ t.newTag }}" data-flick="{{ t.code }}" data-fit="cover" data-live="0" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"><div style="width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,0.15);border-top-color:rgba(255,255,255,0.7);animation:lcSpin .8s linear infinite;"></div></div></sc-if>
                       <sc-if value="{{ t.tall }}"><div data-badge="pill" data-tag="{{ t.newTag }}" data-flick="{{ t.code }}" data-fit="cover" data-live="0" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"><div style="width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,0.15);border-top-color:rgba(255,255,255,0.7);animation:lcSpin .8s linear infinite;"></div></div></sc-if>
                       <div data-cue="cat-tile" sc-camel-on-click="{{ t.onOpen }}" style="position:absolute;inset:0;cursor:pointer;"></div>
-                      <div style="position:absolute;left:7px;top:7px;display:flex;align-items:center;gap:4px;padding:3px 8px 3px 6px;border-radius:11px;background:rgba(0,0,0,.62);color:#fff;font-size:11px;font-weight:500;pointer-events:none;"><svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="#fff"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"></path></svg>{{ badgeLabel }}</div>
                       <sc-if value="{{ t.isNew }}"><div style="position:absolute;right:7px;top:7px;padding:3px 8px;border-radius:11px;background:#25a36f;color:#fff;font-size:11px;font-weight:500;pointer-events:none;">New</div></sc-if>
                     </div>
                     <div sc-camel-on-click="{{ t.onOpen }}" style="cursor:pointer;display:flex;flex-direction:column;gap:2px;">
@@ -3156,7 +3148,6 @@ a:hover{color:#F8DDD0;}
               </div>
               <div style="padding:14px 16px 10px;display:flex;flex-direction:column;gap:6px;">
                 <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:#0b5b42;">
-                  <div style="display:flex;align-items:center;gap:4px;padding:3px 8px 3px 6px;border-radius:11px;background:#e7f5ee;"><svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="#0b5b42"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"></path></svg>{{ badgeLabel }}</div>
                   <div style="color:#667781;font-weight:400;">{{ item.swap }} inside the video</div>
                   <div style="flex:1;"></div>
                   <div sc-camel-on-click="{{ openViewer }}" style="display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:14px;border:1px solid #d1d7db;color:#111b21;font-weight:500;cursor:pointer;" style-hover="background:#f5f6f6"><svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"></path></svg>Full screen</div>
@@ -3450,7 +3441,6 @@ a:hover{color:#F8DDD0;}
                   </div>
                 </sc-for>
               </div>
-              <div style="margin:0 16px;padding:10px 12px;border-radius:10px;background:#f0f7f3;color:#0b5b42;font-size:13px;line-height:1.45;">Businesses you have saved can post Flicks to Status. Swap the product right on the Status, then shop or reply.</div>
               <div style="padding:18px 16px 4px;font-size:19px;font-weight:500;">Channels</div>
               <div style="padding:0 16px;font-size:14px;color:#667781;line-height:1.45;">Stay updated on topics that matter to you. Find channels to follow below.</div>
             </div>
@@ -3493,7 +3483,6 @@ a:hover{color:#F8DDD0;}
                 </div>
                 <div style="font-size:12px;color:rgba(255,255,255,.7);">{{ st.time }}</div>
               </div>
-              <div style="padding:5px 10px;border-radius:12px;background:rgba(255,255,255,.14);font-size:11.5px;font-weight:500;display:flex;align-items:center;gap:4px;"><svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="#fff"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"></path></svg>{{ badgeLabel }}</div>
             </div>
             <div style="flex:1;position:relative;min-height:0;">
               <div sc-camel-on-click="{{ statusPrev }}" style="position:absolute;left:0;top:0;bottom:0;width:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:{{ st.prevOp }};"><svg width="18" height="18" sc-camel-view-box="0 0 24 24" fill="#fff"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></svg></div>
@@ -3519,7 +3508,7 @@ a:hover{color:#F8DDD0;}
               <div style="align-self:center;width:36px;height:4px;border-radius:2px;background:#d1d7db;"></div>
               <div style="display:flex;flex-direction:column;gap:4px;">
                 <div style="font-size:17px;font-weight:500;">{{ varTitle }}</div>
-                <div style="font-size:13px;color:#667781;line-height:1.45;">Pick the {{ varNoun }} you swapped to in Flicks.</div>
+                <div style="font-size:13px;color:#667781;line-height:1.45;">Pick the {{ varNoun }} you swapped to.</div>
               </div>
               <div data-cue="var-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;">
                 <sc-for list="{{ variants }}" as="v" hint-placeholder-count="3">
@@ -3570,7 +3559,7 @@ const ITEMS = {
   opd0tt: { biz:'ford', title:'SUV, Colours & Trims', price:21000, ratio:'sq', swap:'Swap colours', desc:'Pick a colour and trim on the actual car before your test drive. Price shown is the refundable booking amount.', sku:'RM-BK-0001', link:'ridgewaymotors.in/book', flickName:'Ford Automotive' }
 };
 const BIZ = {
-  aster: { name:'Aster & Co.', init:'A', color:'#5B2A4E', cat:'Fashion & beauty', about:'Fashion, beauty and fine jewellery. Delivering across India in 2 to 4 days.', city:'Linking Road, Bandra West, Mumbai', hours:'10 am to 9 pm', site:'asterco.in', tint:'#5B2A4E', last:'Every look in the festive edit now plays in Flicks', time:'9:12', unread:3 },
+  aster: { name:'Aster & Co.', init:'A', color:'#5B2A4E', cat:'Fashion & beauty', about:'Fashion, beauty and fine jewellery. Delivering across India in 2 to 4 days.', city:'Linking Road, Bandra West, Mumbai', hours:'10 am to 9 pm', site:'asterco.in', tint:'#5B2A4E', last:'Our festive edit is here. A few looks picked for you', time:'9:12', unread:3 },
   oak: { name:'Oak & Loom Home', init:'O', color:'#A0522D', cat:'Furniture', about:'Solid-wood furniture, made to order. Free design consultation at home.', city:'Indiranagar, Bengaluru', hours:'11 am to 8 pm', site:'oakandloom.in', tint:'#A0522D', last:'See the living room in every sofa, live', time:'8:40', unread:1 },
   ford: { name:'Ridgeway Motors', init:'R', color:'#1D3557', cat:'Automotive dealer', about:'Authorised dealer. Test drives at home within 24 hours.', city:'Golf Course Road, Gurugram', hours:'9 am to 7 pm', site:'ridgewaymotors.in', tint:'#1D3557', last:'Pick your colour before the test drive', time:'Yesterday', unread:0 }
 };
@@ -3620,7 +3609,7 @@ const NOW = '9:30';
 const initMsgs = () => ({
   aster: [
     { type:'date', text:'Today' },
-    { type:'in', text:'Hi {name}, the festive edit is live. Every look below plays in Flicks: tap a shade or outfit and it swaps on the model, right here.', time:'9:12' },
+    { type:'in', text:'Hi {name}, our festive edit is here. We picked a few looks we think you will love. Have a look and let us know if anything catches your eye.', time:'9:12' },
     { type:'product', code:'dox37k', text:'Tap through every outfit on the same model.', time:'9:12' }
   ],
   oak: [
@@ -3641,9 +3630,9 @@ const STATUS = {
   oak: [ { code:'c5htms', cap:'Same room, every sofa. Swap and pick yours.', time:'Today, 7:30' } ],
   ford: [ { code:'opd0tt', cap:'Every colour, on the actual car. Pick before your drive.', time:'Yesterday, 6:20 pm' } ]
 };
-const STATUS_ORDER = ['aster','oak','ford'];
+const STATUS_ORDER = ['aster','oak'];
 const SOLO = (() => { try { return window.self === window.top; } catch (e) { return false; } })();
-const PRELOAD = ['dox37k','it6hi9','ebxe0f','ocbyu3','c5htms','opd0tt','ikutv6'];
+const PRELOAD = ['dox37k','it6hi9','ebxe0f','ocbyu3','c5htms','ikutv6'];
 
 class Component extends DCLogic {
   state = this.fresh();
@@ -3842,7 +3831,7 @@ class Component extends DCLogic {
         const fs = p.f.style;
         fs.width = fw + 'px'; fs.height = fh + 'px'; fs.left = ((w - fw) / 2) + 'px'; fs.top = ((hh - fh) / 2) + 'px';
         fs.pointerEvents = live ? 'auto' : 'none';
-        p.pill.style.display = badge === 'pill' ? 'flex' : 'none';
+        p.pill.style.display = 'none';
         if (badge === 'pill') p.pill.innerHTML = p.swapSvg + '<span>' + label + '</span>';
         p.icon.style.display = badge === 'icon' ? 'flex' : 'none';
         p.tag.style.display = tg ? 'block' : 'none';
@@ -4008,16 +3997,16 @@ class Component extends DCLogic {
     if (s.gstep && s.gkey === s.stack.join('/')) active = s.gstep;
     const defs = [
       [1, 'A business message arrives', 'An opted-in marketing message from Aster & Co. Same template rules as today; the product card inside it plays in Flicks.', () => this.set(['chats'])],
-      [2, 'Flicks play in the thread', 'The product card is a live, swappable video. Tap a look and it changes on the model, without leaving the chat.', () => this.set(['chats','chat'], { biz:'aster' })],
+      [2, 'Swap in the thread', 'The product card is a live, swappable video. Tap a look and it changes on the model, without leaving the chat.', () => this.set(['chats','chat'], { biz:'aster' })],
       [3, 'Business profile', 'Flicks show in the catalog strip on the profile, exactly where catalog lives today.', () => this.set(['chats','chat','profile'], { biz:'aster' })],
-      [4, 'Flicks are a catalog media type', 'Same item schema: title, price, link, item code. The media field holds a Flicks ID instead of photos.', () => this.set(['chats','chat','profile','catalog'], { biz:'aster' })],
+      [4, 'Video in the catalog', 'Same item schema: title, price, link, item code. The media field holds a Flicks ID instead of photos.', () => this.set(['chats','chat','profile','catalog'], { biz:'aster' })],
       [5, 'Decide on the item page', 'Swap inside the video. This replaces the "do you have it in blue?" back-and-forth with one tap.', () => this.set(['chats','chat','catalog','item'], { biz:'aster', item:'dox37k' })],
       [6, 'Full-screen try', 'Vertical Flicks open edge to edge, with Ask and Add to cart always in reach.', () => this.set(['chats','chat','catalog','item','viewer'], { biz:'aster', item:'ocbyu3' })],
       [7, 'Cart knows the variant', 'Add to cart asks which look the shopper swapped to. The cart line and the order the business receives carry that exact variant.', () => { if (!Object.keys(s.cart).some(k => s.cart[k] > 0)) this.setState({ cart:{ 'dox37k|Black':1 } }); this.set(['chats','chat','catalog','cart'], { biz:'aster' }); }],
       [8, 'Order and pay in chat', 'Business sends the order, shopper pays by UPI in the thread. Conversion happens where the conversation already is.', () => { this.ensurePayReq(); this.set(['chats','chat'], { biz:'aster' }); }]
     ];
     const stdefs = [
-      [9, 'Business posts Flicks to Status', 'Updates tab. Status from a saved business shows a live Flicks preview. Reaches customers who saved the number; expires in 24 hours.', () => this.set(['updates'])],
+      [9, 'Business posts to Status', 'Updates tab. Status from a saved business shows a live Flicks preview. Reaches customers who saved the number; expires in 24 hours.', () => this.set(['updates'])],
       [10, 'Swap on the Status itself', 'The Status plays in Flicks. Shoppers swap the product right there, without leaving Updates.', () => { this.openStatus('aster', 0); this.set(['updates','status']); }],
       [11, 'Shop or reply from Status', 'Shop opens the catalog item; Reply lands in the chat with the item attached. Status becomes a storefront.', () => { this.openStatus('aster', 0); this.set(['updates','status','item'], { biz:'aster', item:'it6hi9', fromStatus:true }); }]
     ];
@@ -4048,7 +4037,7 @@ class Component extends DCLogic {
     const openItem = code => () => this.nav('item', { item:code, biz:ITEMS[code].biz });
 
     const chatList = [
-      ...['aster','oak','ford'].map(id => {
+      ...['aster','oak'].map(id => {
         const bz = BIZ[id];
         const msgs = s.msgs[id];
         const lastM = msgs[msgs.length-1];
