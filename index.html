@@ -2924,6 +2924,19 @@ a:hover{color:#F8DDD0;}
                       </div>
                     </div>
                   </sc-if>
+                  <sc-if value="{{ m.isPick }}">
+                    <div style="align-self:flex-end;width:236px;background:#D9FDD3;border-radius:8px;padding:3px;box-shadow:0 1px 0.5px rgba(11,20,26,.13);display:flex;flex-direction:column;gap:4px;animation:lcPop .25s ease;">
+                      <div sc-camel-on-click="{{ m.onOpen }}" style="position:relative;width:100%;aspect-ratio:1/1;border-radius:6px;overflow:hidden;cursor:pointer;background:{{ m.pickSw }};">
+                        <sc-if value="{{ m.pickHasImg }}"><img src="{{ m.pickImg }}" alt="{{ m.pickVariant }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;"></sc-if>
+                        <div style="position:absolute;left:8px;top:8px;padding:3px 8px;border-radius:999px;background:rgba(17,27,33,.72);color:#fff;font-size:11px;font-weight:600;letter-spacing:.02em;">Picked in Flicks</div>
+                      </div>
+                      <div style="padding:2px 6px 4px;display:flex;flex-direction:column;gap:2px;">
+                        <div style="font-size:13.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ m.title }}</div>
+                        <div style="font-size:13px;color:#3b4a54;">{{ m.pickVariant }} · {{ m.pickPrice }}</div>
+                        <div style="align-self:flex-end;font-size:11px;color:#667781;display:flex;gap:3px;align-items:center;">{{ m.time }}<svg width="16" height="11" sc-camel-view-box="0 0 16 11" fill="#53bdeb"><path d="M11.07.65l-6.6 6.6L1.9 4.7.65 5.95l3.82 3.82 7.85-7.85zM15.35.65l-6.6 6.6-.9-.9-1.25 1.25 2.15 2.17 7.85-7.85z"></path></svg></div>
+                      </div>
+                    </div>
+                  </sc-if>
                   <sc-if value="{{ m.isOrder }}">
                     <div style="align-self:flex-end;width:270px;background:#D9FDD3;border-radius:8px;padding:3px;box-shadow:0 1px 0.5px rgba(11,20,26,.13);display:flex;flex-direction:column;">
                       <div style="display:flex;gap:10px;align-items:center;background:rgba(11,91,66,.07);border-radius:6px;padding:8px;">
@@ -3797,9 +3810,15 @@ class Component extends DCLogic {
   openVar = code => this.setState({ varSheet:{ code, sel:0 } });
   confirmVar = () => {
     const v = this.state.varSheet; if (!v || !v.sel) return;
-    const key = v.code + '|' + this.vLabel(v.code, v.sel);
-    this.setState(s => ({ varSheet:null, cart:{ ...s.cart, [key]:(s.cart[key] || 0) + 1 } }));
-    this.toast('Added · ' + this.vLabel(v.code, v.sel));
+    const label = this.vLabel(v.code, v.sel);
+    const key = v.code + '|' + label;
+    const biz = (ITEMS[v.code] && ITEMS[v.code].biz) || this.state.biz;
+    this.timers.forEach(clearTimeout);
+    this.setState(s => ({ varSheet:null, typing:false, cart:{ ...s.cart, [key]:(s.cart[key] || 0) + 1 } }));
+    this.push(biz, { type:'pick', code:v.code, sel:v.sel, variant:label, text:'Picked ' + label, time:NOW });
+    this.set(['chats','chat'], { biz, item:v.code });
+    this.later(() => this.setState({ typing:true }), 600);
+    this.later(() => { this.setState({ typing:false }); this.push(biz, { type:'in', text:'Great pick. ' + label + ' is in stock and in your cart. Send the cart when you are ready and we will confirm in minutes.', time:NOW }); }, 1900);
   };
   cartLinesFor(cart) { return Object.keys(cart).filter(k => cart[k] > 0).map(k => { const [code, variant] = k.split('|'); return { key:k, code, variant:variant || '', qty:cart[k], it:ITEMS[code] }; }); }
   startCall = () => {};
@@ -3958,7 +3977,7 @@ class Component extends DCLogic {
         const lastM = msgs[msgs.length-1];
         const changed = msgs.length > initMsgs()[id].length;
         const lastAg = AGENTS[id];
-        const last = changed && lastM.type === 'agent' ? (lastM.variant === 'post' ? lastAg.postTitle : lastAg.nudgeTitle) : changed && lastM.type === 'call' ? (lastM.mode === 'video' ? 'Talked to Riya' : 'Voice call') : changed && lastM.type === 'ref' ? lastM.text.replace('{name}', name) : changed ? (lastM.type === 'payReq' ? 'Order ' + lastM.orderNo + (lastM.paid ? ' · Paid' : ' · Review and pay') : lastM.type === 'order' ? 'You: cart sent' : lastM.type === 'enquiry' ? 'You: ' + lastM.text : lastM.text) : bz.last;
+        const last = changed && lastM.type === 'agent' ? (lastM.variant === 'post' ? lastAg.postTitle : lastAg.nudgeTitle) : changed && lastM.type === 'call' ? (lastM.mode === 'video' ? 'Talked to Riya' : 'Voice call') : changed && lastM.type === 'ref' ? lastM.text.replace('{name}', name) : changed ? (lastM.type === 'payReq' ? 'Order ' + lastM.orderNo + (lastM.paid ? ' · Paid' : ' · Review and pay') : lastM.type === 'order' ? 'You: cart sent' : (lastM.type === 'enquiry' || lastM.type === 'pick') ? 'You: ' + lastM.text : lastM.text) : bz.last;
         const unread = changed ? 0 : bz.unread;
         void lastAg;
         return { name:bz.name, img:bz.img, init:bz.init, color:bz.color, verified:true, last, time:changed ? NOW : bz.time, unread, hasUnread:unread > 0, timeColor:unread > 0 ? '#25a36f' : '#667781', onOpen:() => this.set(['chats','chat'], { biz:id }) };
@@ -3974,6 +3993,7 @@ class Component extends DCLogic {
       if (it) Object.assign(base, { code:m.code, src:SRC(m.code), title:it.title, price:fmt(it.price), sq:it.ratio === 'sq', tall:it.ratio === 'tall', tint:b.tint, onOpen:openItem(m.code) });
       if (m.type === 'agent') { const ag = AGENTS[s.biz]; const post = m.variant === 'post'; Object.assign(base, { isAgent:!!ag, hl:post, kicker:ag.postKicker, title:post ? ag.postTitle : ag.nudgeTitle, text:post ? ag.postText : ag.nudgeText, meta:ag.meta, cta:ag.cta, alt:post ? 'Keep shopping' : 'View catalog', agentInit:ag.init, img:b.img, tint:b.color, isVideo:true, isVoice:false, onVoice:() => this.startCall(s.biz, null, 'voice'), outline:post ? '2px solid #25a36f' : 'none', ctaBg:post ? '#0E7C5A' : '#fff', ctaInk:post ? '#fff' : '#0E7C5A', onCta:() => this.startCall(s.biz), onAlt:() => this.nav('catalog') }); }
       if (m.type === 'call') { const mm = Math.floor(m.secs / 60), ss = m.secs % 60; Object.assign(base, { isCall:true, isVideo:m.mode === 'video', isVoice:m.mode === 'voice', callLabel:m.secs ? (m.mode === 'video' ? 'Visual agent' : 'Voice call') : 'Cancelled call', dur:m.secs ? mm + ':' + String(ss).padStart(2, '0') + ' · with ' + (AGENTS[s.biz] ? AGENTS[s.biz].name : b.name) : 'Not answered' }); }
+      if (m.type === 'pick') { const im = (VTH[m.code] || [])[m.sel - 1]; Object.assign(base, { isPick:true, pickImg:im || '', pickHasImg:!!im, pickSw:(VSW[m.code] || [])[m.sel - 1] || '#e9edef', pickVariant:m.variant, pickPrice:fmt(this.priceOf(m.code, m.variant)) }); }
       if (m.type === 'ref') base.isRef = true;
       if (m.type === 'order' || m.type === 'payReq') Object.assign(base, { total:fmt(m.total), summary:m.summary, countLabel:m.count + (m.count === 1 ? ' item' : ' items'), orderNo:m.orderNo, unpaid:!m.paid, status:m.paid ? 'Paid' : 'Awaiting payment', statusColor:m.paid ? '#0E7C5A' : '#b7791f' });
       return base;
@@ -4060,7 +4080,7 @@ class Component extends DCLogic {
       varOpen:!!vs, closeVar:() => this.setState({ varSheet:null }), confirmVar:this.confirmVar,
       varTitle:vIt ? vIt.title : '', varNoun:vIt ? vIt.vn.toLowerCase() : '',
       variants:vIt ? Array.from({ length:vIt.vc }, (_, i) => { const on = vs.sel === i + 1; const im = (VTH[vs.code] || [])[i]; return { n:i + 1, on, img:im || '', hasImg:!!im, noImg:!im, sw:(VSW[vs.code] || [])[i] || '#e9edef', ink:on ? '#0E7C5A' : '#111b21', label:this.vLabel(vs.code, i + 1), vprice:fmt(this.priceOf(vs.code, this.vLabel(vs.code, i + 1))), border:on ? '#0E7C5A' : 'transparent', bg:on ? '#f0f7f3' : '#fff', dot:on ? '#0E7C5A' : '#f0f2f5', dotInk:on ? '#fff' : '#3b4a54', onPick:() => this.setState(st => ({ varSheet:{ ...st.varSheet, sel:i + 1 } })) }; }) : [],
-      varBtnBg:vs && vs.sel ? '#0E7C5A' : '#b9c3c8', varBtnLabel:vIt ? (vs.sel ? 'Add ' + this.vLabel(vs.code, vs.sel) + ' · ' + fmt(this.priceOf(vs.code, this.vLabel(vs.code, vs.sel))) : 'Choose a ' + vIt.vn.toLowerCase()) : '',
+      varBtnBg:vs && vs.sel ? '#0E7C5A' : '#b9c3c8', varBtnLabel:vIt ? (vs.sel ? 'Send ' + this.vLabel(vs.code, vs.sel) + ' · ' + fmt(this.priceOf(vs.code, this.vLabel(vs.code, vs.sel))) : 'Choose a ' + vIt.vn.toLowerCase()) : '',
       cartLines, cartCount, cartTotal:fmt(cartTotal), hasCart:cartCount > 0, cartEmpty:cartCount === 0, sendCart:this.sendCart,
       payOpen:!!s.pay, payForm:s.pay === 'form', payBusy:s.pay === 'busy', payDone:s.pay === 'done', openPay:this.openPay, closePay:this.closePay, confirmPay:this.confirmPay,
       payLines: lo ? lo.lines.map(l => ({ label:l.qty + ' \u00D7 ' + ITEMS[l.code].title + (l.variant ? ' · ' + l.variant : ''), amount:fmt(l.qty * this.priceOf(l.code, l.variant)) })) : [],
