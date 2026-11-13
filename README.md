@@ -4,7 +4,7 @@
 
 | Folder | POC |
 |---|---|
-| `/` (root `index.html`) | **WhatsApp × Flicks**: chat messages, business profile, catalog, Status and the Business app's catalog manager |
+| `/` (root `index.html`) | **WhatsApp × Flicks**: chat messages, business profile, catalog and Status (user journey) |
 | `facebook/` | **Flicks on Facebook**: Feed playable ad (Gap), Audience Network rewarded, Messenger reply-with-pick |
 | `instagram/` | **Flicks on Instagram**: Stories playable, creator reel link in bio, story link sticker, partnership ad, Content Flicks in Reels (GRWM, MicroDrama) |
 | `whatsapp-deck/` | **Flam × WhatsApp pitch deck** |

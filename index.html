@@ -2689,10 +2689,6 @@ a:hover{color:#F8DDD0;}
       <h1 class="lc-grad" style="margin:0;font-family:Manrope, sans-serif;font-size:46px;font-weight:600;line-height:1.08;letter-spacing:-0.025em;text-wrap:balance;">Every brand surface should be interactive</h1>
     </div>
 
-    <div role="tablist" aria-label="Journey" style="display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:5px;border-radius:999px;border:1px solid rgba(240,200,182,0.26);background:rgba(255,240,232,0.02);">
-      <button type="button" role="tab" aria-selected="{{ userSel }}" sc-camel-on-click="{{ pickUser }}" style="height:44px;border:0;border-radius:999px;cursor:pointer;font-family:Manrope, sans-serif;font-size:15px;font-weight:600;background:{{ userTabBg }};color:{{ userTabInk }};box-shadow:{{ userTabGlow }};transition:background .2s, color .2s;">User journey</button>
-      <button type="button" role="tab" aria-selected="{{ bizSel }}" sc-camel-on-click="{{ pickBiz }}" style="height:44px;border:0;border-radius:999px;cursor:pointer;font-family:Manrope, sans-serif;font-size:15px;font-weight:600;background:{{ bizTabBg }};color:{{ bizTabInk }};box-shadow:{{ bizTabGlow }};transition:background .2s, color .2s;">Business journey</button>
-    </div>
 
     <sc-if value="{{ isUserJ }}">
     <div style="display:flex;flex-direction:column;gap:20px;animation:lcPop .25s ease;">
@@ -4042,7 +4038,7 @@ class Component extends DCLogic {
         return { isUserJ:u, isBizJ:!u, userSel:u ? 'true' : 'false', bizSel:u ? 'false' : 'true',
           userTabBg:U.bg, userTabInk:U.ink, userTabGlow:U.glow, bizTabBg:B.bg, bizTabInk:B.ink, bizTabGlow:B.glow,
           pickUser:() => { if (u) return; this.timers.forEach(clearTimeout); this.setState({ journey:'user', typing:false, gstep:0, gkey:null }); this.set(['chats']); },
-          pickBiz:() => { if (!u) return; this.timers.forEach(clearTimeout); this.setState({ journey:'business', typing:false, gstep:0, gkey:null }); this.set(['sCatalog']); } }; })(),
+          pickBiz:() => { return; this.timers.forEach(clearTimeout); this.setState({ journey:'business', typing:false, gstep:0, gkey:null }); this.set(['sCatalog']); } }; })(),
       reset:() => { this.timers.forEach(clearTimeout); clearTimeout(this._ring); clearInterval(this._ci); this.setState(this.fresh()); },
       isChats:scr === 'chats', isChat:scr === 'chat', isProfile:scr === 'profile', isCatalog:scr === 'catalog', isItem:scr === 'item', isViewer:scr === 'viewer', isCart:scr === 'cart',
       isSCatalog:scr === 'sCatalog', isSAdd:scr === 'sAdd', isSPick:scr === 'sPick', isSDetails:scr === 'sDetails',
