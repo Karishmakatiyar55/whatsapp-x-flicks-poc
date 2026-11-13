@@ -2672,6 +2672,17 @@ html,body{margin:0;background:#140f0e;}
 @media (max-width:639px){html,body{background:#fff;overflow:hidden;overscroll-behavior:none;}}
 *{box-sizing:border-box;}
 *{-webkit-tap-highlight-color:transparent;}
+.wcRing{position:absolute;inset:0;border-radius:inherit;border:1.5px solid rgba(37,211,102,.8);animation:wcBreath 2.6s ease-in-out infinite;}
+.wcTap{position:absolute;left:50%;top:56%;width:0;height:0;}
+.wcTap b,.wcTap i{position:absolute;left:-8px;top:-8px;width:16px;height:16px;border-radius:50%;}
+.wcTap b{background:rgba(255,255,255,.96);box-shadow:0 2px 12px rgba(0,0,0,.35);animation:wcDot 2.4s ease-in-out infinite;}
+.wcTap i{border:1.5px solid rgba(255,255,255,.9);animation:wcRip 2.4s ease-out infinite;}
+.wcTap i+i{animation-delay:.55s;}
+[data-k="tap"]>.wcRing,[data-k="ring"]>.wcTap{display:none;}
+@keyframes wcBreath{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.30);opacity:1}65%{box-shadow:0 0 0 10px rgba(37,211,102,0);opacity:.5}}
+@keyframes wcRip{0%{transform:scale(1);opacity:.9}100%{transform:scale(3.4);opacity:0}}
+@keyframes wcDot{0%,100%{transform:scale(1)}12%{transform:scale(.78)}26%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.wcRing,.wcTap b,.wcTap i{animation:none;}}
 a{color:#EDBDA6;}
 a:hover{color:#F8DDD0;}
 .lc-grad{padding-bottom:6px;background:linear-gradient(92deg,#FBEDE5 0%,#F1CDBC 45%,#E3A68F 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
@@ -2806,7 +2817,7 @@ a:hover{color:#F8DDD0;}
             </div>
             <div style="flex:1;overflow:auto;">
               <sc-for list="{{ chatList }}" as="c" hint-placeholder-count="6">
-                <div sc-camel-on-click="{{ c.onOpen }}" style="display:flex;gap:14px;align-items:center;padding:10px 16px;cursor:pointer;" style-hover="background:#f5f6f6">
+                <div data-cue="{{ c.cue }}" sc-camel-on-click="{{ c.onOpen }}" style="display:flex;gap:14px;align-items:center;padding:10px 16px;cursor:pointer;" style-hover="background:#f5f6f6">
                   <div style="position:relative;width:50px;height:50px;border-radius:50%;background:{{ c.color }};color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:500;flex-shrink:0;font-family:Manrope, sans-serif;font-weight:600;">{{ c.init }}<img src="{{ c.img }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
                   <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;">
                     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
@@ -2833,7 +2844,7 @@ a:hover{color:#F8DDD0;}
                 <div style="width:56px;height:30px;border-radius:15px;background:#d9fdd3;display:flex;align-items:center;justify-content:center;color:#0b5b42;"><svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path></svg></div>
                 <div style="font-size:12px;font-weight:500;">Chats</div>
               </div>
-              <div sc-camel-on-click="{{ goUpdates }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;color:#54656f;cursor:pointer;">
+              <div data-cue="tab-updates" sc-camel-on-click="{{ goUpdates }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;color:#54656f;cursor:pointer;">
                 <div style="position:relative;height:30px;display:flex;align-items:center;"><svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"></circle></svg><sc-if value="{{ hasUnseenStatus }}"><div style="position:absolute;top:4px;right:-5px;width:8px;height:8px;border-radius:50%;background:#25a36f;"></div></sc-if></div>
                 <div style="font-size:12px;">Updates</div>
               </div>
@@ -2853,7 +2864,7 @@ a:hover{color:#F8DDD0;}
         <sc-if value="{{ isChat }}">
           <div style="position:absolute;inset:0;display:flex;flex-direction:column;background:#EFEAE2;">
             <div style="display:flex;align-items:center;gap:6px;padding:8px 8px 8px 4px;background:#fff;border-bottom:1px solid #e9edef;">
-              <div sc-camel-on-click="{{ back }}" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;" style-hover="background:#f0f2f5"><svg width="22" height="22" sc-camel-view-box="0 0 24 24" fill="#111b21"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg></div>
+              <div data-cue="chat-back" sc-camel-on-click="{{ back }}" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;" style-hover="background:#f0f2f5"><svg width="22" height="22" sc-camel-view-box="0 0 24 24" fill="#111b21"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg></div>
               <div sc-camel-on-click="{{ openProfile }}" style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;cursor:pointer;">
                 <div style="position:relative;width:38px;height:38px;border-radius:50%;background:{{ biz.color }};color:#fff;display:flex;align-items:center;justify-content:center;font-family:Manrope, sans-serif;font-weight:600;font-size:18px;flex-shrink:0;">{{ biz.init }}<img src="{{ biz.img }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;"></div>
                 <div style="min-width:0;">
@@ -2864,7 +2875,7 @@ a:hover{color:#F8DDD0;}
                   <div style="font-size:12px;color:#667781;">Business account</div>
                 </div>
               </div>
-              <div sc-camel-on-click="{{ openCatalog }}" title="Catalog" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;color:#3b4a54;" style-hover="background:#f0f2f5"><svg width="22" height="22" sc-camel-view-box="0 0 24 24" fill="currentColor"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"></path></svg></div>
+              <div data-cue="chat-store" sc-camel-on-click="{{ openCatalog }}" title="Catalog" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;color:#3b4a54;" style-hover="background:#f0f2f5"><svg width="22" height="22" sc-camel-view-box="0 0 24 24" fill="currentColor"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"></path></svg></div>
             </div>
 
             <div ref="{{ chatRef }}" style="flex:1;overflow:auto;padding:10px 10px 14px;display:flex;flex-direction:column;gap:6px;">
@@ -2895,7 +2906,7 @@ a:hover{color:#F8DDD0;}
                         <div style="font-size:12.5px;color:#667781;line-height:1.4;">{{ m.text }}</div>
                         <div style="align-self:flex-end;font-size:11px;color:#667781;">{{ m.time }}</div>
                       </div>
-                      <div sc-camel-on-click="{{ m.onOpen }}" style="border-top:1px solid #e9edef;padding:10px;text-align:center;color:#0E7C5A;font-size:14px;font-weight:500;cursor:pointer;">View item</div>
+                      <div data-cue="view-item" sc-camel-on-click="{{ m.onOpen }}" style="border-top:1px solid #e9edef;padding:10px;text-align:center;color:#0E7C5A;font-size:14px;font-weight:500;cursor:pointer;">View item</div>
                     </div>
                   </sc-if>
                   <sc-if value="{{ m.isCatalog }}">
@@ -2966,7 +2977,7 @@ a:hover{color:#F8DDD0;}
                         <div style="align-self:flex-end;font-size:11px;color:#667781;">{{ m.time }}</div>
                       </div>
                       <sc-if value="{{ m.unpaid }}">
-                        <div sc-camel-on-click="{{ openPay }}" style="border-top:1px solid #e9edef;padding:11px;text-align:center;color:#0E7C5A;font-size:14px;font-weight:500;cursor:pointer;" style-hover="background:#f5f6f6">Review and pay</div>
+                        <div data-cue="pay-open" sc-camel-on-click="{{ openPay }}" style="border-top:1px solid #e9edef;padding:11px;text-align:center;color:#0E7C5A;font-size:14px;font-weight:500;cursor:pointer;" style-hover="background:#f5f6f6">Review and pay</div>
                       </sc-if>
                     </div>
                   </sc-if>
@@ -3024,7 +3035,7 @@ a:hover{color:#F8DDD0;}
                         <div style="flex:1;display:flex;flex-direction:column;gap:2px;"><div style="font-size:14px;font-weight:500;">{{ upiId }}</div><div style="font-size:12px;color:#667781;">Pay with any UPI app</div></div>
                         <div style="font-size:13px;color:#0E7C5A;font-weight:500;">Change</div>
                       </div>
-                      <div sc-camel-on-click="{{ confirmPay }}" style="height:48px;border-radius:24px;background:#0E7C5A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;cursor:pointer;" style-hover="background:#0b6a4c">Pay {{ payTotal }}</div>
+                      <div data-cue="pay-confirm" sc-camel-on-click="{{ confirmPay }}" style="height:48px;border-radius:24px;background:#0E7C5A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;cursor:pointer;" style-hover="background:#0b6a4c">Pay {{ payTotal }}</div>
                     </div>
                   </sc-if>
                   <sc-if value="{{ payBusy }}">
@@ -3062,7 +3073,7 @@ a:hover{color:#F8DDD0;}
                 <div style="font-size:14px;color:#667781;">Business account · {{ biz.cat }}</div>
                 <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;width:100%;margin-top:12px;">
                   <div sc-camel-on-click="{{ back }}" style="border:1px solid #e9edef;border-radius:12px;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px;color:#0E7C5A;cursor:pointer;"><svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path></svg><div style="font-size:13px;color:#111b21;">Message</div></div>
-                  <div sc-camel-on-click="{{ openCatalog }}" style="border:1px solid #e9edef;border-radius:12px;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px;color:#0E7C5A;cursor:pointer;"><svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="currentColor"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"></path></svg><div style="font-size:13px;color:#111b21;">Catalog</div></div>
+                  <div data-cue="profile-catalog" sc-camel-on-click="{{ openCatalog }}" style="border:1px solid #e9edef;border-radius:12px;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px;color:#0E7C5A;cursor:pointer;"><svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="currentColor"><path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z"></path></svg><div style="font-size:13px;color:#111b21;">Catalog</div></div>
                 </div>
               </div>
               <div style="background:#fff;padding:14px 16px;display:flex;flex-direction:column;gap:12px;">
@@ -3104,7 +3115,7 @@ a:hover{color:#F8DDD0;}
                 <div style="font-size:18px;font-weight:500;">Catalog</div>
                 <div style="font-size:12.5px;color:#667781;">{{ biz.name }} · {{ catalogCount }}</div>
               </div>
-              <div sc-camel-on-click="{{ openCart }}" style="position:relative;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;color:#3b4a54;" style-hover="background:#f0f2f5">
+              <div data-cue="cart-icon" sc-camel-on-click="{{ openCart }}" style="position:relative;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;color:#3b4a54;" style-hover="background:#f0f2f5">
                 <svg width="22" height="22" sc-camel-view-box="0 0 24 24" fill="currentColor"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0020 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"></path></svg>
                 <sc-if value="{{ hasCart }}"><div style="position:absolute;top:3px;right:2px;min-width:17px;height:17px;border-radius:9px;background:#0E7C5A;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;padding:0 4px;">{{ cartCount }}</div></sc-if>
               </div>
@@ -3120,7 +3131,7 @@ a:hover{color:#F8DDD0;}
                     <div style="position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:10px;background:#1b1b1b;">
                       <sc-if value="{{ t.sq }}"><div data-badge="pill" data-tag="{{ t.newTag }}" data-flick="{{ t.code }}" data-fit="cover" data-live="0" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"><div style="width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,0.15);border-top-color:rgba(255,255,255,0.7);animation:lcSpin .8s linear infinite;"></div></div></sc-if>
                       <sc-if value="{{ t.tall }}"><div data-badge="pill" data-tag="{{ t.newTag }}" data-flick="{{ t.code }}" data-fit="cover" data-live="0" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"><div style="width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,0.15);border-top-color:rgba(255,255,255,0.7);animation:lcSpin .8s linear infinite;"></div></div></sc-if>
-                      <div sc-camel-on-click="{{ t.onOpen }}" style="position:absolute;inset:0;cursor:pointer;"></div>
+                      <div data-cue="cat-tile" sc-camel-on-click="{{ t.onOpen }}" style="position:absolute;inset:0;cursor:pointer;"></div>
                       <div style="position:absolute;left:7px;top:7px;display:flex;align-items:center;gap:4px;padding:3px 8px 3px 6px;border-radius:11px;background:rgba(0,0,0,.62);color:#fff;font-size:11px;font-weight:500;pointer-events:none;"><svg width="12" height="12" sc-camel-view-box="0 0 24 24" fill="#fff"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"></path></svg>{{ badgeLabel }}</div>
                       <sc-if value="{{ t.isNew }}"><div style="position:absolute;right:7px;top:7px;padding:3px 8px;border-radius:11px;background:#25a36f;color:#fff;font-size:11px;font-weight:500;pointer-events:none;">New</div></sc-if>
                     </div>
@@ -3167,7 +3178,7 @@ a:hover{color:#F8DDD0;}
               </div>
             </div>
             <div style="display:flex;flex-direction:column;gap:8px;padding:10px 16px 14px;border-top:1px solid #e9edef;">
-              <div sc-camel-on-click="{{ addCurrent }}" style="height:46px;border-radius:23px;background:#0E7C5A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;cursor:pointer;" style-hover="background:#0b6a4c">{{ addLabel }}</div>
+              <div data-cue="add-cart" sc-camel-on-click="{{ addCurrent }}" style="height:46px;border-radius:23px;background:#0E7C5A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;cursor:pointer;" style-hover="background:#0b6a4c">{{ addLabel }}</div>
               <div style="display:flex;gap:8px;">
                 <div sc-camel-on-click="{{ enquire }}" style="flex:1;height:46px;border-radius:23px;border:1px solid #d1d7db;color:#0E7C5A;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;cursor:pointer;" style-hover="background:#f5f6f6">Message</div>
               </div>
@@ -3191,7 +3202,7 @@ a:hover{color:#F8DDD0;}
             </div>
             <div style="display:flex;gap:8px;padding:12px 14px 14px;">
               <div sc-camel-on-click="{{ enquire }}" style="flex:1;height:44px;border-radius:22px;border:1px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;cursor:pointer;">Ask about this</div>
-              <div sc-camel-on-click="{{ addCurrent }}" style="flex:1;height:44px;border-radius:22px;background:#25a36f;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;cursor:pointer;">{{ addLabel }}</div>
+              <div data-cue="viewer-add" sc-camel-on-click="{{ addCurrent }}" style="flex:1;height:44px;border-radius:22px;background:#25a36f;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;cursor:pointer;">{{ addLabel }}</div>
             </div>
           </div>
         </sc-if>
@@ -3239,7 +3250,7 @@ a:hover{color:#F8DDD0;}
               <div style="border-top:1px solid #e9edef;padding:12px 16px 14px;display:flex;flex-direction:column;gap:10px;">
                 <div style="display:flex;justify-content:space-between;font-size:15px;"><div style="color:#3b4a54;">Subtotal ({{ cartCount }} items)</div><div style="font-weight:500;">{{ cartTotal }}</div></div>
                 <div style="font-size:12.5px;color:#667781;line-height:1.45;">{{ biz.name }} confirms availability and sends a payment request in the chat.</div>
-                <div sc-camel-on-click="{{ sendCart }}" style="height:46px;border-radius:23px;background:#0E7C5A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;cursor:pointer;" style-hover="background:#0b6a4c">Send to business</div>
+                <div data-cue="send-cart" sc-camel-on-click="{{ sendCart }}" style="height:46px;border-radius:23px;background:#0E7C5A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;cursor:pointer;" style-hover="background:#0b6a4c">Send to business</div>
               </div>
             </sc-if>
           </div>
@@ -3437,7 +3448,7 @@ a:hover{color:#F8DDD0;}
                   <div style="font-size:13px;color:#111b21;">Add status</div>
                 </div>
                 <sc-for list="{{ statusCards }}" as="sc" hint-placeholder-count="3">
-                  <div sc-camel-on-click="{{ sc.onOpen }}" style="width:104px;flex-shrink:0;display:flex;flex-direction:column;gap:8px;cursor:pointer;">
+                  <div data-cue="status-row" sc-camel-on-click="{{ sc.onOpen }}" style="width:104px;flex-shrink:0;display:flex;flex-direction:column;gap:8px;cursor:pointer;">
                     <div style="position:relative;height:150px;border-radius:14px;overflow:hidden;background:#1b1b1b;outline:2.5px solid {{ sc.ring }};outline-offset:2px;">
                       <div data-flick="{{ sc.code }}" data-fit="cover" data-live="0" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"><div style="width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,0.15);border-top-color:rgba(255,255,255,0.7);animation:lcSpin .8s linear infinite;"></div></div>
                     </div>
@@ -3503,7 +3514,7 @@ a:hover{color:#F8DDD0;}
             <div style="padding:12px 20px 2px;font-size:15px;line-height:1.4;text-align:center;text-wrap:pretty;">{{ st.cap }}</div>
             <div style="display:flex;gap:8px;padding:12px 14px 14px;">
               <div sc-camel-on-click="{{ statusAsk }}" style="flex:1;height:44px;border-radius:22px;border:1px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:500;cursor:pointer;"><svg width="16" height="16" sc-camel-view-box="0 0 24 24" fill="#fff"><path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"></path></svg>Reply</div>
-              <div sc-camel-on-click="{{ statusShop }}" style="flex:1.4;height:44px;border-radius:22px;background:#25a36f;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;cursor:pointer;">Shop · {{ st.price }}</div>
+              <div data-cue="status-shop" sc-camel-on-click="{{ statusShop }}" style="flex:1.4;height:44px;border-radius:22px;background:#25a36f;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;cursor:pointer;">Shop · {{ st.price }}</div>
             </div>
           </div>
         </sc-if>
@@ -3519,7 +3530,7 @@ a:hover{color:#F8DDD0;}
                 <div style="font-size:17px;font-weight:500;">{{ varTitle }}</div>
                 <div style="font-size:13px;color:#667781;line-height:1.45;">Pick the {{ varNoun }} you swapped to in Flicks.</div>
               </div>
-              <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;">
+              <div data-cue="var-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;">
                 <sc-for list="{{ variants }}" as="v" hint-placeholder-count="3">
                   <div sc-camel-on-click="{{ v.onPick }}" style="display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;">
                     <div style="position:relative;width:100%;aspect-ratio:1/1;border-radius:14px;overflow:hidden;background:#f0f2f5;outline:2.5px solid {{ v.border }};outline-offset:2px;display:flex;align-items:center;justify-content:center;">
@@ -3531,7 +3542,7 @@ a:hover{color:#F8DDD0;}
                   </div>
                 </sc-for>
               </div>
-              <div sc-camel-on-click="{{ confirmVar }}" style="height:48px;border-radius:24px;background:{{ varBtnBg }};color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;cursor:pointer;">{{ varBtnLabel }}</div>
+              <div data-cue="var-send" sc-camel-on-click="{{ confirmVar }}" style="height:48px;border-radius:24px;background:{{ varBtnBg }};color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;cursor:pointer;">{{ varBtnLabel }}</div>
             </div>
           </div>
         </sc-if>
@@ -3720,6 +3731,70 @@ class Component extends DCLogic {
     el.__ci = { anc, rad };
     return el.__ci;
   }
+  cueTick(root, hr, k) {
+    const now = performance.now();
+    if (this._cueT && now - this._cueT < 120) return;
+    this._cueT = now;
+    let el = this._cue;
+    if (!el || el.parentElement !== root) {
+      el = document.createElement('div');
+      const ez = 'cubic-bezier(.2,.7,.2,1)';
+      el.style.cssText = 'position:absolute;left:0;top:0;width:0;height:0;pointer-events:none;z-index:75;opacity:0;transition:opacity .5s ease, left .45s ' + ez + ', top .45s ' + ez + ', width .45s ' + ez + ', height .45s ' + ez + ';';
+      el.innerHTML = '<div class="wcRing"></div><div class="wcTap"><i></i><i></i><b></b></div>';
+      root.appendChild(el); this._cue = el;
+    }
+    const s = this.state, sig = this.screenSig() + '|' + (s.varSheet ? s.varSheet.sel : '-');
+    if (sig !== this._cueSig) { this._cueSig = sig; this._cueSince = now; }
+    const tried = this._tried || (this._tried = {}), vis = this._visited || (this._visited = {});
+    if (this._pool) for (const c in this._pool) if (this._pool[c].touched) tried[c] = true;
+    const top = s.stack[s.stack.length - 1];
+    vis[top] = true;
+    const dwell = now - this._cueSince;
+    const shown = e => { if (!e) return false; const r = e.getBoundingClientRect(); return r.width > 1 && r.height > 1; };
+    const q = n => { for (const e of root.querySelectorAll('[data-cue="' + n + '"]')) if (shown(e)) return e; return null; };
+    const flick = code => { if (dwell > 7000) return null; const all = [...root.querySelectorAll('[data-flick]')].filter(e => (!code || e.getAttribute('data-flick') === code) && !tried[e.getAttribute('data-flick')] && shown(e)); return all.length ? all[all.length - 1] : null; };
+    const pr = (s.msgs.aster || []).filter(m => m.type === 'payReq');
+    const unpaid = pr.some(m => !m.paid), paid = pr.some(m => m.paid);
+    const cartN = Object.values(s.cart).reduce((a, b) => a + b, 0);
+    let t = null, kind = 'ring', f;
+    if (s.call || s.journey !== 'user') t = null;
+    else if (s.pay) t = q('pay-confirm');
+    else if (s.varSheet) t = q(s.varSheet.sel ? 'var-send' : 'var-grid');
+    else if (top === 'chats') t = paid ? (vis.status ? null : q('tab-updates')) : q('chat-aster');
+    else if (top === 'chat') {
+      if (s.biz !== 'aster') t = null;
+      else if (unpaid) t = q('pay-open');
+      else if (paid) t = vis.status ? null : q('chat-back');
+      else if (cartN) t = q('chat-store');
+      else if ((f = flick())) { t = f; kind = 'tap'; }
+      else t = q('view-item');
+    }
+    else if (top === 'profile') t = q('profile-catalog');
+    else if (top === 'catalog') t = cartN && !s.fromSeller ? q('cart-icon') : q('cat-tile');
+    else if (top === 'item' || top === 'viewer') { if ((f = flick(s.item))) { t = f; kind = 'tap'; } else t = q(top === 'item' ? 'add-cart' : 'viewer-add'); }
+    else if (top === 'cart') t = q('send-cart');
+    else if (top === 'updates') t = q('status-row');
+    else if (top === 'status') { const st = (STATUS[s.status.biz] || [])[s.status.idx]; if ((f = flick(st && st.code))) { t = f; kind = 'tap'; } else t = q('status-shop'); }
+    let ok = !!t && dwell > 900;
+    if (ok) {
+      const r = t.getBoundingClientRect();
+      let x = (r.left - hr.left) / k, y = (r.top - hr.top) / k, w = r.width / k, h = r.height / k;
+      let cl = x, ct = y, cr = x + w, cb = y + h;
+      for (const a of this.clipInfo(t, root).anc) { const ar = a.getBoundingClientRect(); cl = Math.max(cl, (ar.left - hr.left) / k); ct = Math.max(ct, (ar.top - hr.top) / k); cr = Math.min(cr, (ar.right - hr.left) / k); cb = Math.min(cb, (ar.bottom - hr.top) / k); }
+      if ((cr - cl) * (cb - ct) < 0.55 * w * h || cr <= cl || cb <= ct) ok = false;
+      else {
+        const pad = kind === 'ring' ? 3 : 0;
+        const RW = root.clientWidth || 9999, RH = root.clientHeight || 9999;
+        cl = Math.max(cl, pad + 1); cr = Math.min(cr, RW - pad - 1); ct = Math.max(ct, pad + 1); cb = Math.min(cb, RH - pad - 1);
+        const rad = Math.min(parseFloat(getComputedStyle(t).borderRadius) || 0, h / 2);
+        const es = el.style;
+        el.setAttribute('data-k', kind);
+        es.left = (cl - pad) + 'px'; es.top = (ct - pad) + 'px'; es.width = (cr - cl + pad * 2) + 'px'; es.height = (cb - ct + pad * 2) + 'px';
+        es.borderRadius = (Math.max(rad, 10) + pad) + 'px';
+      }
+    }
+    el.style.opacity = ok ? '1' : '0';
+  }
   tick = () => {
     this._raf = requestAnimationFrame(this.tick);
     const host = this.poolRef.current;
@@ -3728,6 +3803,7 @@ class Component extends DCLogic {
     const root = host.parentElement;
     const hr = host.getBoundingClientRect();
     const k = hr.width / (host.offsetWidth || 1) || 1;
+    try { this.cueTick(root, hr, k); } catch (e) {}
     const slots = {};
     root.querySelectorAll('[data-flick]').forEach(el => { const c = el.getAttribute('data-flick'); if (c && !slots[c]) slots[c] = el; });
     const hideAll = !!this.state.pay;
@@ -3980,9 +4056,9 @@ class Component extends DCLogic {
         const last = changed && lastM.type === 'agent' ? (lastM.variant === 'post' ? lastAg.postTitle : lastAg.nudgeTitle) : changed && lastM.type === 'call' ? (lastM.mode === 'video' ? 'Talked to Riya' : 'Voice call') : changed && lastM.type === 'ref' ? lastM.text.replace('{name}', name) : changed ? (lastM.type === 'payReq' ? 'Order ' + lastM.orderNo + (lastM.paid ? ' · Paid' : ' · Review and pay') : lastM.type === 'order' ? 'You: cart sent' : (lastM.type === 'enquiry' || lastM.type === 'pick') ? 'You: ' + lastM.text : lastM.text) : bz.last;
         const unread = changed ? 0 : bz.unread;
         void lastAg;
-        return { name:bz.name, img:bz.img, init:bz.init, color:bz.color, verified:true, last, time:changed ? NOW : bz.time, unread, hasUnread:unread > 0, timeColor:unread > 0 ? '#25a36f' : '#667781', onOpen:() => this.set(['chats','chat'], { biz:id }) };
+        return { name:bz.name, img:bz.img, init:bz.init, color:bz.color, verified:true, last, time:changed ? NOW : bz.time, unread, hasUnread:unread > 0, timeColor:unread > 0 ? '#25a36f' : '#667781', cue:'chat-' + id, onOpen:() => this.set(['chats','chat'], { biz:id }) };
       }),
-      ...PEOPLE.map(p => ({ ...p, verified:false, unread:0, hasUnread:false, timeColor:'#667781', onOpen:() => {} }))
+      ...PEOPLE.map(p => ({ ...p, verified:false, unread:0, hasUnread:false, timeColor:'#667781', cue:'', onOpen:() => {} }))
     ];
     const ordered = [chatList[0], chatList[1], chatList[3], chatList[4], chatList[2], chatList[5]];
     chatList.length = 0; chatList.push(...ordered);
@@ -4059,7 +4135,7 @@ class Component extends DCLogic {
           userTabBg:U.bg, userTabInk:U.ink, userTabGlow:U.glow, bizTabBg:B.bg, bizTabInk:B.ink, bizTabGlow:B.glow,
           pickUser:() => { if (u) return; this.timers.forEach(clearTimeout); this.setState({ journey:'user', typing:false, gstep:0, gkey:null }); this.set(['chats']); },
           pickBiz:() => { return; this.timers.forEach(clearTimeout); this.setState({ journey:'business', typing:false, gstep:0, gkey:null }); this.set(['sCatalog']); } }; })(),
-      reset:() => { this.timers.forEach(clearTimeout); clearTimeout(this._ring); clearInterval(this._ci); this.setState(this.fresh()); },
+      reset:() => { this._tried = {}; this._visited = {}; this.timers.forEach(clearTimeout); clearTimeout(this._ring); clearInterval(this._ci); this.setState(this.fresh()); },
       isChats:scr === 'chats', isChat:scr === 'chat', isProfile:scr === 'profile', isCatalog:scr === 'catalog', isItem:scr === 'item', isViewer:scr === 'viewer', isCart:scr === 'cart',
       isSCatalog:scr === 'sCatalog', isSAdd:scr === 'sAdd', isSPick:scr === 'sPick', isSDetails:scr === 'sDetails',
       back:this.back, chatRef:this.chatRef, poolRef:this.poolRef,
